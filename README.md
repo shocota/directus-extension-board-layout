@@ -1,0 +1,1 @@
+# directus-extension-board-layout
