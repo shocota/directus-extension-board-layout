@@ -30,5 +30,8 @@
     "vue": "^3.2.45",
     "vuedraggable": "^4.1.0",
     "semantic-release": "^20.0.2"
+  },
+  "release": {
+    "branches": ["main"]
   }
 }
