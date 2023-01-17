@@ -14,11 +14,16 @@
 </template>
 
 <script lang="ts">
-import {
-  useCollection,
-} from "@directus/extensions-sdk";
+import { useCollection } from "@directus/extensions-sdk";
 import { Field, Filter } from "@directus/shared/types";
-import { computed, defineComponent, PropType, toRefs } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  ref,
+  toRefs,
+} from "vue";
 import LaneComponent from "./components/lane.vue";
 import { LayoutOptions } from "./types";
 export default defineComponent({
@@ -40,14 +45,13 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const {
-      collection: collectionKey,
-      layoutOptions,
-    } = toRefs(props);
+    const { collection: collectionKey, layoutOptions } = toRefs(props);
     const collection = useCollection(collectionKey);
 
     const field = computed<Field | undefined>(() =>
-      collection.fields.value.find((f) => f.field == layoutOptions.value?.groupByField)
+      collection.fields.value.find(
+        (f) => f.field == layoutOptions.value?.groupByField
+      )
     );
     const choices = computed<{ text: string }[]>(
       () => field.value?.meta?.options?.choices || []
