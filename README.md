@@ -11,6 +11,13 @@ or
 
 Place `index.js` in the `${DIRECTUS_PROJECT_ROOT_FOLDER}/extensions/layout/board-layout/`.
 
+## Usage
+- You must set a field interface to *dropdown* to choose as a Group By option.
+
+## Current limitation
+- No paging feature! I highly prioritize to add it.
+- Many group derives too heavy API & SQL request.
+
 # License
 
 This repository is licensed under the GPLv3 License. See the LICENSE file for details.
