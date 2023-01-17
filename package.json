@@ -41,7 +41,8 @@
         "assets": [
           {"path": "dist/index.js", "label": "index.js"}
         ]
-      }]
+      }],
+      "@semantic-release/git"
     ],
     "branches": [
       "main"
