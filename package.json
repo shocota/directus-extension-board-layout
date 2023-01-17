@@ -1,7 +1,7 @@
 {
   "name": "directus-extension-board-layout",
   "icon": "extension",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "directus",
     "directus-extension",
@@ -37,11 +37,17 @@
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/npm",
-      ["@semantic-release/github", {
-        "assets": [
-          {"path": "dist/index.js", "label": "index.js"}
-        ]
-      }],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/index.js",
+              "label": "index.js"
+            }
+          ]
+        }
+      ],
       "@semantic-release/git"
     ],
     "branches": [
