@@ -9,7 +9,7 @@
       />
     </v-card-title>
     <v-card-text class="main">
-      <page-component
+      <paginate-unit
         v-for="page in pages"
         :key="page"
         :page="page"
@@ -29,10 +29,9 @@
 import { Field, Filter, LogicalFilterAND } from "@directus/shared/types";
 import { computed, defineComponent, PropType, ref, toRefs, watch } from "vue";
 import { LayoutOptions } from "../types";
-import LoadObserver from "./loadObserver.vue";
-import PageComponent from "./page.vue";
+import PaginateUnit from "./paginateUnit.vue";
 export default defineComponent({
-  components: { LoadObserver, PageComponent },
+  components: { PaginateUnit },
   inheritAttrs: false,
   props: {
     collection: { type: String, required: true },

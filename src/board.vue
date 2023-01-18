@@ -1,6 +1,6 @@
 <template>
   <div class="boards-layout">
-    <lane-component
+    <paginate-group
       v-for="choice in choices"
       :key="choice.text"
       :field="field"
@@ -24,10 +24,10 @@ import {
   ref,
   toRefs,
 } from "vue";
-import LaneComponent from "./components/lane.vue";
+import paginateGroup from "./components/paginateGroup.vue";
 import { LayoutOptions } from "./types";
 export default defineComponent({
-  components: { LaneComponent },
+  components: { paginateGroup },
   inheritAttrs: false,
   props: {
     layoutOptions: { type: Object as PropType<LayoutOptions> },

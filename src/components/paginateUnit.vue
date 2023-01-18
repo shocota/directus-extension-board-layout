@@ -41,7 +41,7 @@
       </v-card>
     </template>
     <template #footer>
-      <load-observer
+      <paginate-unit-load-observer
         :collection="fieldValue"
         v-model:is-in-viewport="isInViewPort"
       />
@@ -64,10 +64,10 @@ import {
 } from "vue";
 import { LayoutOptions } from "../types";
 import { useRouter } from "vue-router";
-import LoadObserver from "./loadObserver.vue";
+import PaginateUnitLoadObserver from "./paginateUnitLoadObserver.vue";
 
 export default defineComponent({
-  components: { Draggable, LoadObserver },
+  components: { Draggable, PaginateUnitLoadObserver },
   inheritAttrs: false,
   props: {
     collectionKey: { type: String, required: true },
