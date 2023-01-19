@@ -118,7 +118,7 @@ export default defineComponent({
     const sort = computed(() => layoutOptions.value?.sort);
 
     const { items, totalPages, loading, error } = useItems(collectionKey, {
-      limit: ref(5),
+      limit: ref(25),
       sort,
       search,
       page,
