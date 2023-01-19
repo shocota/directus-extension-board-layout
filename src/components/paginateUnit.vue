@@ -1,18 +1,19 @@
 <template>
   <draggable
+    class="paginate-unit"
     :list="items"
     item-key="id"
     :data-group="fieldValue"
-    group="kanban"
+    group="items"
     @end="handleDragEnd"
   >
     <template #item="{ element }">
-      <v-card
-        class="drag-handle card"
+      <section
+        class="card drag-handle"
         :data-item-id="element.id"
         @click="() => handleCardClick(element)"
       >
-        <div class="card-header">
+        <header>
           <div class="card-icon" v-if="layoutOptions?.iconTemplate">
             <render-template
               class="card-icon-inner"
@@ -30,15 +31,15 @@
             :item="element"
           />
           <span v-else class="card-title muted">--</span>
-        </div>
-        <v-card-text v-if="layoutOptions?.cardContentTemplate">
+        </header>
+        <main v-if="layoutOptions?.cardContentTemplate">
           <render-template
             :template="layoutOptions.cardContentTemplate"
             :collection="collectionKey"
             :item="element"
           />
-        </v-card-text>
-      </v-card>
+        </main>
+      </section>
     </template>
     <template #footer>
       <paginate-unit-load-observer
@@ -147,6 +148,7 @@ export default defineComponent({
 
     const api = useApi();
     const router = useRouter();
+
     function handleDragEnd(event: EndEvent) {
       const id = event.item.dataset["itemId"];
       const newValue = event.to.dataset["group"];
@@ -171,49 +173,60 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.swimlane {
-  background-color: var(--background-subdued);
-  border-radius: var(--border-radius);
-  flex: 0 0 320px;
+
+.paginate-unit {
   display: flex;
   flex-flow: column nowrap;
+  gap: 8px;
   align-items: stretch;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-.header > .item-count {
-  color: var(--foreground-subdued);
-  font-size: 0.95rem;
-}
-
-.main {
+.paginate-unit > *:last-child {
   flex-grow: 1;
 }
-.v-card.card {
+
+.card {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+  border-radius: 16px;
+  box-shadow: 0px 1px 4px 0px rgba(var(--card-shadow-color), 0.05);
   background-color: var(--background-page);
 }
 
-.card-header {
+.card > * {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.card > *:first-child {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding-top: 16px;
+}
+
+.card > *:last-child {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  padding-bottom: 16px;
+}
+
+header {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  margin-top: 4px;
-  padding: 16px;
   gap: 16px;
   font-weight: 700;
 }
 
-.card-header > .card-title {
+header > .card-title {
   white-space: inherit;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.card-header > .card-title.muted {
+header > .card-title.muted {
   color: var(--foreground-subdued);
 }
 
@@ -234,4 +247,5 @@ export default defineComponent({
   flex-grow: 1;
   text-align: center;
 }
+
 </style>

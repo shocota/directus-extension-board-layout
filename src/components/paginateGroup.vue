@@ -1,14 +1,14 @@
 <template>
-  <v-card class="swimlane" style="max-height: none">
-    <v-card-title class="header">
+  <section>
+    <header>
       <component
         :is="`display-${field?.meta?.display}`"
         v-bind="field?.meta?.display_options"
         :type="field?.type"
         :value="fieldValue"
       />
-    </v-card-title>
-    <v-card-text class="main">
+    </header>
+    <main class="paginate-units">
       <paginate-unit
         v-for="page in pages"
         :key="page"
@@ -21,8 +21,8 @@
         :search="search"
         @hasNextPage="hundleHasNextPage"
       />
-    </v-card-text>
-  </v-card>
+    </main>
+  </section>
 </template>
 
 <script lang="ts">
@@ -83,7 +83,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.swimlane {
+section {
   background-color: var(--background-subdued);
   border-radius: var(--border-radius);
   flex: 0 0 320px;
@@ -92,16 +92,25 @@ export default defineComponent({
   align-items: stretch;
 }
 
-.header {
+header {
+  padding: 16px 16px 0 16px;
   display: flex;
   justify-content: space-between;
 }
-.header > .item-count {
-  color: var(--foreground-subdued);
-  font-size: 0.95rem;
+
+.paginate-units {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-.main {
+.paginate-units > * {
+  flex: 0 0 auto;
+}
+
+.paginate-units > *:last-child {
   flex-grow: 1;
 }
+
 </style>
