@@ -6,7 +6,7 @@
       :field="field"
       :field-value="choice.text"
       :collection="collectionKey"
-      :layoutOptions="layoutOptions"
+      :layout-options="layoutOptions"
       :filter="filter"
       :search="search"
     />
@@ -16,35 +16,19 @@
 <script lang="ts">
 import { useCollection } from "@directus/extensions-sdk";
 import { Field, Filter } from "@directus/shared/types";
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  PropType,
-  ref,
-  toRefs,
-} from "vue";
+import { computed, defineComponent, PropType, toRefs } from "vue";
 import paginateGroup from "./components/paginateGroup.vue";
 import { LayoutOptions } from "./types";
 export default defineComponent({
   components: { paginateGroup },
   inheritAttrs: false,
   props: {
-    layoutOptions: { type: Object as PropType<LayoutOptions> },
-    collection: {
-      type: String,
-      required: true,
-    },
-    filter: {
-      type: Object as PropType<Filter | null>,
-      default: null,
-    },
-    search: {
-      type: String as PropType<string | null>,
-      default: null,
-    },
+    layoutOptions: { type: Object as PropType<LayoutOptions>, required: true },
+    collection: { type: String, required: true },
+    filter: { type: Object as PropType<Filter | null>, default: null },
+    search: { type: String as PropType<string | null>, default: null },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const { collection: collectionKey, layoutOptions } = toRefs(props);
     const collection = useCollection(collectionKey);
 

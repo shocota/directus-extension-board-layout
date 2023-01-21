@@ -19,7 +19,7 @@
         :layout-options="layoutOptions"
         :filter="filter"
         :search="search"
-        @hasNextPage="hundleHasNextPage"
+        @has-next-page="hundleHasNextPage"
       />
     </main>
   </section>
@@ -35,9 +35,9 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     collection: { type: String, required: true },
-    field: { type: Object as PropType<Field> },
-    fieldValue: { type: String },
-    layoutOptions: { type: Object as PropType<LayoutOptions> },
+    field: { type: Object as PropType<Field>, required: true },
+    fieldValue: { type: String, required: true },
+    layoutOptions: { type: Object as PropType<LayoutOptions>, required: true },
     filter: {
       type: Object as PropType<Filter | null>,
       default: null,
@@ -56,11 +56,11 @@ export default defineComponent({
       search,
       layoutOptions,
     } = toRefs(props);
-    const pages = ref([1])
+    const pages = ref([1]);
 
     const filter = computed<LogicalFilterAND>(() => ({
       _and: [
-        { [field.value!.field]: { _eq: fieldValue.value } },
+        { [field.value.field]: { _eq: fieldValue.value } },
         originFilter.value || {},
       ],
     }));
@@ -112,5 +112,4 @@ header {
 .paginate-units > *:last-child {
   flex-grow: 1;
 }
-
 </style>

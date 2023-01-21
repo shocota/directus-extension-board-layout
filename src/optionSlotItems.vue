@@ -24,22 +24,19 @@
   </div>
   <div class="field">
     <div class="type-label">{{ "Icon" }}</div>
-    <v-field-template
-      v-model="iconTemplateWritable"
-      :collection="collection"
-    />
+    <v-field-template v-model="iconTemplateWritable" :collection="collection" />
   </div>
 </template>
 
 <script lang="ts">
 import { useCollection, useSync } from "@directus/extensions-sdk";
-import { computed, defineComponent, PropType, toRefs, watch } from "vue";
+import { computed, defineComponent, PropType, toRefs } from "vue";
 import { LayoutOptions } from "./types";
 export default defineComponent({
   inheritAttrs: false,
   props: {
     collection: { type: String, required: true },
-    layoutOptions: { type: Object as PropType<LayoutOptions> },
+    layoutOptions: { type: Object as PropType<LayoutOptions>, required: true },
   },
   setup(props, { emit }) {
     const { collection: collectionKey } = toRefs(props);

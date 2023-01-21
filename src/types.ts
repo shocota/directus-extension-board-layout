@@ -6,4 +6,4 @@ export type LayoutOptions = {
   sort?: string[];
 };
 
-export type LayoutQuery = {};
+export type LayoutQuery = Record<string, never>;

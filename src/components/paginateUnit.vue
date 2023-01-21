@@ -14,7 +14,7 @@
         @click="() => handleCardClick(element)"
       >
         <header>
-          <div class="card-icon" v-if="layoutOptions?.iconTemplate">
+          <div v-if="layoutOptions?.iconTemplate" class="card-icon">
             <render-template
               class="card-icon-inner"
               :template="layoutOptions.iconTemplate"
@@ -24,8 +24,8 @@
           </div>
 
           <render-template
-            class="card-title"
             v-if="layoutOptions?.headerTemplate"
+            class="card-title"
             :template="layoutOptions.headerTemplate"
             :collection="collectionKey"
             :item="element"
@@ -43,8 +43,8 @@
     </template>
     <template #footer>
       <paginate-unit-load-observer
-        :collection="fieldValue"
         v-model:is-in-viewport="isInViewPort"
+        :collection="fieldValue"
       />
     </template>
   </draggable>
@@ -71,11 +71,27 @@ export default defineComponent({
   components: { Draggable, PaginateUnitLoadObserver },
   inheritAttrs: false,
   props: {
-    collectionKey: { type: String, required: true },
-    field: { type: Object as PropType<Field> },
-    fieldValue: { type: String },
-    page: { type: Number, required: true },
-    layoutOptions: { type: Object as PropType<LayoutOptions> },
+    collectionKey: {
+      type: String,
+      required: true,
+    },
+    field: {
+      type: Object as PropType<Field>,
+      required: true,
+    },
+    fieldValue: {
+      type: String,
+      required: true,
+    },
+    page: {
+      type: Number,
+      required: true,
+    },
+    layoutOptions: {
+      type: Object as PropType<LayoutOptions>,
+      required: true,
+    },
+
     filter: {
       type: Object as PropType<Filter | null>,
       default: null,
@@ -97,7 +113,7 @@ export default defineComponent({
     } = toRefs(props);
     const isInViewPort = ref(false);
     const collectionKey: Ref<string | null> = ref(null);
-    
+
     watch(isInViewPort, () => {
       collectionKey.value = props.collectionKey;
     });
@@ -106,7 +122,7 @@ export default defineComponent({
 
     const filter = computed<LogicalFilterAND>(() => ({
       _and: [
-        { [field.value!.field]: { _eq: fieldValue.value } },
+        { [field.value.field]: { _eq: fieldValue.value } },
         originFilter.value || {},
       ],
     }));
@@ -117,7 +133,7 @@ export default defineComponent({
 
     const sort = computed(() => layoutOptions.value?.sort);
 
-    const { items, totalPages, loading, error } = useItems(collectionKey, {
+    const { items, totalPages } = useItems(collectionKey, {
       limit: ref(25),
       sort,
       search,
@@ -152,7 +168,7 @@ export default defineComponent({
     function handleDragEnd(event: EndEvent) {
       const id = event.item.dataset["itemId"];
       const newValue = event.to.dataset["group"];
-      const diff = { id, [field.value!.field]: newValue };
+      const diff = { id, [field.value.field]: newValue };
       api.patch(`items/${collectionKey.value}`, [diff]);
     }
 
@@ -166,14 +182,12 @@ export default defineComponent({
       handleDragEnd,
       handleCardClick,
       isInViewPort,
-      page,
     };
   },
 });
 </script>
 
 <style scoped>
-
 .paginate-unit {
   display: flex;
   flex-flow: column nowrap;
@@ -247,5 +261,4 @@ header > .card-title.muted {
   flex-grow: 1;
   text-align: center;
 }
-
 </style>

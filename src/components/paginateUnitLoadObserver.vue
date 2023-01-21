@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { useSync } from "@directus/extensions-sdk";
-import { defineComponent, onMounted, onUnmounted, ref, toRefs } from "vue";
+import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 export default defineComponent({
   inheritAttrs: false,
   props: {
@@ -30,7 +30,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      intersectionObserver.value!.observe(loader.value);
+      intersectionObserver.value.observe(loader.value);
     });
 
     onUnmounted(() => {
