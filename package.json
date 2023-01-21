@@ -21,7 +21,9 @@
     "build": "directus-extension build",
     "dev": "directus-extension build -w --no-minify",
     "link": "directus-extension link",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "type-check": "npx tsc --noEmit",
+    "lint": "npx eslint src/**/*"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
