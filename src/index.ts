@@ -1,18 +1,18 @@
 import { defineLayout, useSync } from "@directus/extensions-sdk";
-import BoardComponent from "./board.vue";
-import OptionsComponent from "./options.vue";
-import ActionsComponent from "./actions.vue";
+import BoardLayout from "./boardLayout.vue";
+import OptionSlotItems from "./optionSlotItems.vue";
+import ActionSlotItems from "./actionSlotItems.vue";
 import { LayoutOptions, LayoutQuery } from "./types";
 
 export default defineLayout<LayoutOptions, LayoutQuery | null>({
   id: "board-layout",
   name: "Board",
   icon: "box",
-  component: BoardComponent,
+  component: BoardLayout,
   slots: {
-    options: OptionsComponent,
+    options: OptionSlotItems,
     sidebar: () => null,
-    actions: ActionsComponent,
+    actions: ActionSlotItems,
   },
   setup(props, { emit }) {
     const layoutOptions = useSync(props, "layoutOptions", emit);

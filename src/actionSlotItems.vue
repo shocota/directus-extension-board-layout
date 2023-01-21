@@ -28,7 +28,7 @@ import { LayoutOptions } from "./types";
 export default defineComponent({
   inheritAttrs: false,
   props: {
-    layoutOptions: { type: Object as PropType<LayoutOptions> },
+    layoutOptions: { type: Object as PropType<LayoutOptions>, required: true },
     collection: { type: String, required: true },
   },
   setup(props, { emit }) {
