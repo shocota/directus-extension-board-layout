@@ -1,53 +1,52 @@
 <template>
-  <draggable
-    class="paginate-unit"
-    :list="items"
-    item-key="id"
-    :data-group="fieldValue"
-    group="items"
-    @end="handleDragEnd"
+  <paginate-unit-load-observer
+    v-model:is-in-viewport="isInViewPort"
+    :collection="fieldValue"
   >
-    <template #item="{ element }">
-      <section
-        class="card drag-handle"
-        :data-item-id="element.id"
-        @click="() => handleCardClick(element)"
-      >
-        <header>
-          <div v-if="layoutOptions?.iconTemplate" class="card-icon">
+    <draggable
+      class="paginate-unit"
+      :list="items"
+      item-key="id"
+      :data-group="fieldValue"
+      group="items"
+      @end="handleDragEnd"
+    >
+      <template #item="{ element }">
+        <section
+          class="card drag-handle"
+          :data-item-id="element.id"
+          @click="() => handleCardClick(element)"
+        >
+          <header>
+            <div v-if="layoutOptions?.iconTemplate" class="card-icon">
+              <render-template
+                class="card-icon-inner"
+                :template="layoutOptions.iconTemplate"
+                :collection="collectionKey"
+                :item="element"
+              />
+            </div>
+
             <render-template
-              class="card-icon-inner"
-              :template="layoutOptions.iconTemplate"
+              v-if="layoutOptions?.headerTemplate"
+              class="card-title"
+              :template="layoutOptions.headerTemplate"
               :collection="collectionKey"
               :item="element"
             />
-          </div>
-
-          <render-template
-            v-if="layoutOptions?.headerTemplate"
-            class="card-title"
-            :template="layoutOptions.headerTemplate"
-            :collection="collectionKey"
-            :item="element"
-          />
-          <span v-else class="card-title muted">--</span>
-        </header>
-        <main v-if="layoutOptions?.cardContentTemplate">
-          <render-template
-            :template="layoutOptions.cardContentTemplate"
-            :collection="collectionKey"
-            :item="element"
-          />
-        </main>
-      </section>
-    </template>
-    <template #footer>
-      <paginate-unit-load-observer
-        v-model:is-in-viewport="isInViewPort"
-        :collection="fieldValue"
-      />
-    </template>
-  </draggable>
+            <span v-else class="card-title muted">--</span>
+          </header>
+          <main v-if="layoutOptions?.cardContentTemplate">
+            <render-template
+              :template="layoutOptions.cardContentTemplate"
+              :collection="collectionKey"
+              :item="element"
+            />
+          </main>
+        </section>
+      </template>
+    </draggable>
+  </paginate-unit-load-observer>
 </template>
 
 <script lang="ts">
@@ -195,10 +194,6 @@ export default defineComponent({
   align-items: stretch;
 }
 
-.paginate-unit > *:last-child {
-  flex-grow: 1;
-}
-
 .card {
   display: flex;
   flex-flow: column nowrap;
@@ -240,6 +235,7 @@ header > .card-title {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+
 header > .card-title.muted {
   color: var(--foreground-subdued);
 }

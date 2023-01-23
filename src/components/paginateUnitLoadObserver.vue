@@ -1,5 +1,7 @@
 <template>
-  <div ref="loader"></div>
+  <div ref="loader">
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">
