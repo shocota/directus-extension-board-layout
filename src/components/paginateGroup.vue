@@ -100,12 +100,13 @@ header {
 
 .paginate-units {
   padding: 16px;
-  flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
+  flex-grow: 1;
 }
 
 .paginate-units > * {
+  display: flex;
   flex: 0 0 auto;
 }
 

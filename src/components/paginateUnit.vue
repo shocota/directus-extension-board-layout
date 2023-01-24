@@ -190,6 +190,7 @@ export default defineComponent({
 .paginate-unit {
   display: flex;
   flex-flow: column nowrap;
+  flex-grow: 1;
   gap: 8px;
   align-items: stretch;
 }
