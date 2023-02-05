@@ -1,7 +1,7 @@
 <template>
   <div class="boards-layout">
     <paginate-group
-      v-for="choice in choices"
+      v-for="choice in groups"
       :key="choice.text"
       :field="field"
       :field-value="choice.text"
@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import { useCollection } from "@directus/extensions-sdk";
+import { useApi, useCollection } from "@directus/extensions-sdk";
 import { Field, Filter } from "@directus/shared/types";
-import { computed, defineComponent, PropType, toRefs } from "vue";
+import { computed, defineComponent, PropType, ref, toRefs, watch } from "vue";
 import paginateGroup from "./components/paginateGroup.vue";
 import { LayoutOptions } from "./types";
 export default defineComponent({
@@ -37,11 +37,45 @@ export default defineComponent({
         (f) => f.field == layoutOptions.value?.groupByField
       )
     );
-    const choices = computed<{ text: string }[]>(
-      () => field.value?.meta?.options?.choices || []
+
+    const api = useApi();
+
+    const groups = ref<Record<"text", string>[]>([]);
+
+    watch(
+      field,
+      (next) => {
+        console.log(next);
+        api
+          .get(`items/${collectionKey.value}`, {
+            params: {
+              groupBy: [next?.field],
+            },
+          })
+          .then(
+            (res) =>
+              (groups.value = (
+                res.data.data as Record<string, string | number | boolean>[]
+              )
+                .map((element) => Object.values(element))
+                .flat()
+                .map((value) => ({ text: value.toString() })))
+          );
+      },
+      { immediate: true }
     );
 
-    return { choices, field, collectionKey };
+    const choices = computed<{ text: string }[]>(() => {
+      switch (field.value?.meta?.display) {
+        case "labels":
+          return field.value?.meta?.options?.choices || [];
+        case "rating":
+          return [{ text: "0" }, { text: "1" }];
+      }
+      return [];
+    });
+
+    return { field, collectionKey, groups };
   },
 });
 </script>

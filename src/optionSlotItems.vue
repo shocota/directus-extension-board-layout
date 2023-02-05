@@ -44,7 +44,11 @@ export default defineComponent({
 
     const enumLikeFields = computed(() =>
       collection.fields.value.filter(
-        (f) => f.meta?.interface === "select-dropdown"
+        (f) =>
+          f.meta?.display === "labels" ||
+          f.meta?.display === "rating" ||
+          f.meta?.display === "icon" ||
+          f.meta?.display === "color"
       )
     );
 

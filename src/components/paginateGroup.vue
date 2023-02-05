@@ -4,6 +4,7 @@
       <component
         :is="`display-${field?.meta?.display}`"
         v-bind="field?.meta?.display_options"
+        :interface-options="field?.meta?.options"
         :type="field?.type"
         :value="fieldValue"
       />
