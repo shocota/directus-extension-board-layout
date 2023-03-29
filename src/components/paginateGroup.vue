@@ -37,6 +37,7 @@ export default defineComponent({
     collection: { type: String, required: true },
     field: { type: Object as PropType<Field>, required: true },
     fieldValue: { type: String, required: true },
+    fieldText: { type: String, required: true },
     layoutOptions: { type: Object as PropType<LayoutOptions>, required: true },
     filter: {
       type: Object as PropType<Filter | null>,
@@ -50,6 +51,7 @@ export default defineComponent({
   setup(props) {
     const {
       fieldValue,
+      fieldText,
       field,
       filter: originFilter,
       collection: collectionKey,

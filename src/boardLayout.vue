@@ -2,9 +2,9 @@
   <div class="boards-layout">
     <paginate-group
       v-for="choice in choices"
-      :key="choice.text"
+      :key="choice.value"
       :field="field"
-      :field-value="choice.text"
+      :field-value="choice.value"
       :collection="collectionKey"
       :layout-options="layoutOptions"
       :filter="filter"
@@ -37,7 +37,7 @@ export default defineComponent({
         (f) => f.field == layoutOptions.value?.groupByField
       )
     );
-    const choices = computed<{ text: string }[]>(
+    const choices = computed<{ text: string, value: any }[]>(
       () => field.value?.meta?.options?.choices || []
     );
 
