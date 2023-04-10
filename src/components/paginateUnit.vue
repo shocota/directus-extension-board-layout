@@ -167,7 +167,7 @@ export default defineComponent({
     function handleDragEnd(event: EndEvent) {
       const id = event.item.dataset["itemId"];
       const newValue = event.to.dataset["group"];
-      const diff = { id, [field.value.field]: newValue };
+      const diff = { id, [field.value.field]: newValue, sort: event.newIndex };
       api.patch(`items/${collectionKey.value}`, [diff]);
     }
 
