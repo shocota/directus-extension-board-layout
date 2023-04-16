@@ -169,6 +169,15 @@ export default defineComponent({
       const newValue = event.to.dataset["group"];
       const diff = { id, [field.value.field]: newValue };
       api.patch(`items/${collectionKey.value}`, [diff]);
+
+      // apply new sort order, works only for currently visible items
+      const allItems = event.to.children;
+      const patchPayload: { id: string; sort: number }[] = [];
+      for (let ix = 0; ix < allItems.length; ix++) {
+        const itemId = allItems[ix]["dataset"].itemId;
+        patchPayload.push({ id: itemId, sort: ix });
+      }
+      api.patch(`items/${collectionKey.value}`, patchPayload);
     }
 
     function handleCardClick(item: Item) {
